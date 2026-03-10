@@ -73,12 +73,13 @@ public class ArrayIntQueue implements IntQueue {
 
     /** {@inheritDoc} */
     public boolean isEmpty() {
-        return size >= 0;
+        return size == 0;           //temdeg n uur baihaar zuvhun true gesen utga butsaasan
     }
 
     /** {@inheritDoc} */
     public Integer peek() {
-        return elementData[head];
+       // return elementData[head];  //hooson uyd 0 butsaana
+       return isEmpty() ? null : elementData[head];
     }
 
     /** {@inheritDoc} */
@@ -91,18 +92,18 @@ public class ArrayIntQueue implements IntQueue {
      * necessary, to ensure that it can hold at least size + 1 elements.
      */
     private void ensureCapacity() {
-        if (size == elementData.length) {
-            int oldCapacity = elementData.length;
-            int newCapacity = 2 * oldCapacity + 1;
-            int[] newData = new int[newCapacity];
-            for (int i = head; i < oldCapacity; i++) {
-                newData[i - head] = elementData[i];
-            }
-            for (int i = 0; i < head; i++) {
-                newData[head - i] = elementData[i];
-            }
-            elementData = newData;
-            head = 0;
+    if (size == elementData.length) {
+        int oldCapacity = elementData.length;
+        int newCapacity = 2 * oldCapacity + 1;
+        int[] newData = new int[newCapacity];
+        for (int i = head; i < oldCapacity; i++) {
+            newData[i - head] = elementData[i];
         }
-    }
+        for (int i = 0; i < head; i++) {
+            newData[oldCapacity - head + i] = elementData[i];
+        }
+        elementData = newData;  // ← if дотор байх ёстой
+        head = 0;               // ← if дотор байх ёстой
+    }              // ← if-ийн хаах }
+}                  // ← method-ийн хаах }
 }
